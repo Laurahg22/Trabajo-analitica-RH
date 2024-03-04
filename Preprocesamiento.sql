@@ -59,5 +59,27 @@ SET retirementType = CASE
                  END;
                  
 SELECT retirementType FROM retirement_info
+ 
+ 
+-- crear tabla de análisis finaldata_general
+DROP TABLE IF EXISTS base_completa;
+
+CREATE TABLE base_completa AS
+SELECT
+
+a.*,
+b.*,
+c.*,
+d.*
+
+FROM general_data2 a INNER JOIN employee_survey_data2 b on a.EmployeeID=b.EmployeeID
+INNER JOIN manager_survey2 c ON a.EmployeeID=c.EmployeeID INNER join retirement_info2 d 
+on a.EmployeeID=d.EmployeeID
+
+select * FROM base_completa
+
+ALTER TABLE base_completa DROP COLUMN '';
+ALTER TABLE base_completa DROP COLUMN ':1'; 
+ALTER TABLE base_completa DROP COLUMN ':2';
 
 
