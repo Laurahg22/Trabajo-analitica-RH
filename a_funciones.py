@@ -95,3 +95,14 @@ def preparar_datos (df):
     
     
     return X
+
+def imputar_con_moda(df, variables):
+    for variable in variables:
+        # Calcula la moda de la variable
+        moda = df[variable].mode()[0]  # Selecciona el primer valor de la moda en caso de que haya múltiples modas
+        # Imputa los valores nulos con la moda
+        df[variable].fillna(moda, inplace=True)
+        # Imprime información sobre los valores nulos imputados
+        nulos_imputados = df[variable].isnull().sum()
+    # Devuelve el DataFrame modificado
+    return df
