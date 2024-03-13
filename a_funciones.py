@@ -57,39 +57,30 @@ def medir_modelos(modelos,scoring,X,y,cv):
 
 
 
-def preparar_datos (df):
-   
-    
+def preparar_datos(df):
 
-    #######Cargar y procesar nuevos datos ######
-   
-    
-    #### Cargar modelo y listas 
-    
-   
-    list_cat=joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/var_cat.pkl")
-    list_dummies=joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/list_dummies.pkl")
-    var_names=joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/var_names.pkl")
-    scaler=joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/scaler.pkl")
+    list_cat = joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/var_cat.pkl")
+    list_dummies = joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/list_dummies.pkl")
+    var_names = joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/var_names.pkl")
+    scaler = joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/scaler.pkl")
 
-    ####Ejecutar funciones de transformaciones
-    
-    df=imp_datos(df,list_cat)
+    df = imp_datos(df, list_cat) 
     le = LabelEncoder()
     for column in list_cat:
-        if len(df[column].unique()) == 2:  
+        if len(df[column].unique()) == 2:
             df[column] = le.fit_transform(df[column])
     df = pd.get_dummies(df)
-    df_dummies=pd.get_dummies(df,columns=list_dummies)  
-    df_dummies= df_dummies.loc[:,~df_dummies.columns.isin(['EmployeeID'])]
-    X2=scaler.transform(df_dummies)
-    X=pd.DataFrame(X2,columns=df_dummies.columns)
-    X=X[var_names]
+    df_dummies = pd.get_dummies(df, columns=list_dummies)
+    df_dummies = df_dummies.loc[:, ~df_dummies.columns.isin(['EmployeeID'])]
     
-    
-    
+    # Asegurar que las dimensiones de los datos coincidan
+    X2 = scaler.transform(df_dummies)  # Aplicar la transformación del scaler
+    X = pd.DataFrame(X2, columns=df_dummies.columns)
+    X = X[var_names]  # Seleccionar las variables necesarias
     
     return X
+
+
 
 def imputar_con_moda(df, variables):
     for variable in variables:
