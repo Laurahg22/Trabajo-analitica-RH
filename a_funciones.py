@@ -75,7 +75,12 @@ def preparar_datos (df):
     ####Ejecutar funciones de transformaciones
     
     df=imp_datos(df,list_cat)
-    df_dummies=pd.get_dummies(df,columns=list_dummies)
+    le = LabelEncoder()
+    for column in list_cat:
+      if len(list_dummies[column].unique())
+        list_dummies[column] = le.fit_transform(list_dummies[column])
+        df_dummies=pd.get_dummies(df,columns=list_dummies)
+      
     df_dummies= df_dummies.loc[:,~df_dummies.columns.isin(['perf_2023','EmpID2'])]
     X2=scaler.transform(df_dummies)
     X=pd.DataFrame(X2,columns=df_dummies.columns)
