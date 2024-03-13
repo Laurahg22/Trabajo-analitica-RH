@@ -80,8 +80,8 @@ def preparar_datos (df):
         if len(df[column].unique()) == 2:  
             df[column] = le.fit_transform(df[column])
     df = pd.get_dummies(df)
-      
-    df_dummies= df_dummies.loc[:,~df_dummies.columns.isin(['Employee'])]
+    df_dummies=pd.get_dummies(df,columns=list_dummies)  
+    df_dummies= df_dummies.loc[:,~df_dummies.columns.isin(['EmployeeID'])]
     X2=scaler.transform(df_dummies)
     X=pd.DataFrame(X2,columns=df_dummies.columns)
     X=X[var_names]
