@@ -76,10 +76,10 @@ def preparar_datos (df):
     
     df=imp_datos(df,list_cat)
     le = LabelEncoder()
-    for column in cat_2015:
-        if len(df_dummies2015[column].unique()) == 2:  
-            df_dummies2015[column] = le.fit_transform(df_dummies2015[column])
-    df_dummies_2015 = pd.get_dummies(df_dummies2015)
+    for column in list_cat:
+        if len(df[column].unique()) == 2:  
+            df[column] = le.fit_transform(df[column])
+    df = pd.get_dummies(df)
       
     df_dummies= df_dummies.loc[:,~df_dummies.columns.isin(['perf_2023','EmpID2'])]
     X2=scaler.transform(df_dummies)
