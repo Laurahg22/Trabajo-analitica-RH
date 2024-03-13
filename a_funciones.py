@@ -74,7 +74,7 @@ def preparar_datos (df):
 
     ####Ejecutar funciones de transformaciones
     
-    df=imputar_datos(df,list_cat)
+    df=imp_datos(df,list_cat)
     df_dummies=pd.get_dummies(df,columns=list_dummies)
     df_dummies= df_dummies.loc[:,~df_dummies.columns.isin(['perf_2023','EmpID2'])]
     X2=scaler.transform(df_dummies)
