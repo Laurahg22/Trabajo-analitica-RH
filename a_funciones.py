@@ -81,7 +81,7 @@ def preparar_datos (df):
             df[column] = le.fit_transform(df[column])
     df = pd.get_dummies(df)
       
-    df_dummies= df_dummies.loc[:,~df_dummies.columns.isin(['perf_2023','EmpID2'])]
+    df_dummies= df_dummies.loc[:,~df_dummies.columns.isin(['Employee'])]
     X2=scaler.transform(df_dummies)
     X=pd.DataFrame(X2,columns=df_dummies.columns)
     X=X[var_names]
