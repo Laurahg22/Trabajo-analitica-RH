@@ -77,10 +77,10 @@ def preparar_datos (df):
     #### Cargar modelo y listas 
     
    
-    list_cat=joblib.load("list_cat.pkl")
-    list_dummies=joblib.load("list_dummies.pkl")
-    var_names=joblib.load("var_names.pkl")
-    scaler=joblib.load( "scaler.pkl") 
+    list_cat=joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/var_cat.pkl")
+    list_dummies=joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/list_dummies.pkl")
+    var_names=joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/var_names.pkl")
+    scaler=joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/scaler.pkl")
 
     ####Ejecutar funciones de transformaciones
     
