@@ -5,7 +5,7 @@ from sklearn.impute import SimpleImputer ### para imputación
 from sklearn.feature_selection import SelectFromModel
 from sklearn.model_selection import cross_val_predict, cross_val_score, cross_validate
 import joblib
-from sklearn.preprocessing import StandardScaler ## escalar variables 
+from sklearn.preprocessing import StandardScaler, LabelEncoder 
 
 ####Este archivo contienen funciones utiles a utilizar en diferentes momentos del proyecto
 
