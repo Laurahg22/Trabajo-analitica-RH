@@ -16,7 +16,15 @@ def ejecutar_sql (nombre_archivo, cur):
   sql_as_string=sql_file.read()
   sql_file.close
   cur.executescript(sql_as_string)
-  
+
+#### esta funcion itera sobre las columnas se la base y guarda una lista de las variables con nulos
+
+def columnas_nulos(df):
+    # Obtener las columnas que tienen al menos un valor nulo
+    columnas_con_nulos = df.columns[df.isnull().any()].tolist()
+    return columnas_con_nulos
+
+### Esta función imputa los nulos con la moda
   
 def imp_datos (df, variables):
     for variable in variables:
@@ -64,20 +72,20 @@ def preparar_datos(df):
     var_names = joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/var_names.pkl")
     scaler = joblib.load("/content/drive/MyDrive/trabajo/Trabajo-analitica-RH/salidas/scaler.pkl")
 
-    df = imp_datos(df, list_cat) 
+    nulos = columnas_nulos(df)
+    df_t = imp_datos(df, nulos)
     le = LabelEncoder()
     for column in list_cat:
-        if len(df[column].unique()) == 2:
-            df[column] = le.fit_transform(df[column])
-    df = pd.get_dummies(df)
-    df_dummies = pd.get_dummies(df, columns=list_dummies)
-    df_dummies = df_dummies.loc[:, ~df_dummies.columns.isin(['EmployeeID'])]
-    
+        if len(df_t[column].unique()) == 2:
+            df_t[column] = le.fit_transform(df_t[column])
+    df_t = pd.get_dummies(df_t)
+    df_t = df_t.loc[:, ~df_t.columns.isin(['EmployeeID'])]
+
     # Asegurar que las dimensiones de los datos coincidan
-    X2 = scaler.transform(df_dummies)  # Aplicar la transformación del scaler
-    X = pd.DataFrame(X2, columns=df_dummies.columns)
+    X2 = scaler.transform(df_t)  # Aplicar la transformación del scaler
+    X = pd.DataFrame(X2, columns=df_t.columns)
     X = X[var_names]  # Seleccionar las variables necesarias
-    
+
     return X
 
 
